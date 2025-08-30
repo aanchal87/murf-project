@@ -3,35 +3,78 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Murf AI Voice Agent - Day 27</title>
+  <title>VoiceSync AI - Intelligent Voice Assistant</title>
   <link rel="stylesheet" href="/static/style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
   <style>
-    /* Enhanced styling for Day 27 */
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #2a2d3a;
+      color: #ffffff;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Header Styles */
+    .app-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 24px;
+      background: #2a2d3a;
+      border-bottom: 1px solid #3a3d4a;
+    }
+
+    .app-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #ffffff;
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+
+    .app-title i {
+      color: #c084fc;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
     .config-button {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      z-index: 1000;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: transparent;
       border: none;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      color: white;
+      color: #9ca3af;
       cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      padding: 8px;
+      border-radius: 8px;
+      transition: all 0.2s ease;
     }
-    
+
     .config-button:hover {
-      transform: rotate(90deg) scale(1.1);
-      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+      background: #3a3d4a;
+      color: #ffffff;
     }
-    
+
+    .profile-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 2px solid #c084fc;
+      background: #4a4d5a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+
+    /* Config Modal */
     .config-modal {
       display: none;
       position: fixed;
@@ -40,276 +83,629 @@
       top: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(0,0,0,0.8);
-      backdrop-filter: blur(5px);
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(4px);
     }
-    
+
     .config-modal.open {
-      display: block;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       animation: modalFadeIn 0.3s ease;
     }
-    
+
     @keyframes modalFadeIn {
       from { opacity: 0; }
       to { opacity: 1; }
     }
-    
+
     .config-content {
-      background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-      margin: 5% auto;
+      background: #2a2d3a;
+      margin: 10% auto;
       padding: 0;
-      border-radius: 15px;
+      border-radius: 16px;
       width: 90%;
-      max-width: 600px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+      max-width: 560px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
       animation: modalSlideIn 0.3s ease;
-      max-height: 90vh;
+      max-height: 85vh;
       overflow-y: auto;
+      border: 1px solid #3a3d4a;
     }
-    
+
     @keyframes modalSlideIn {
-      from { transform: translateY(-50px); opacity: 0; }
+      from { transform: translateY(-30px); opacity: 0; }
       to { transform: translateY(0); opacity: 1; }
     }
-    
+
     .config-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 20px 30px;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
+      padding: 16px 24px;
+      border-bottom: 1px solid #3a3d4a;
     }
-    
+
     .config-header h2 {
-      color: white;
+      color: #ffffff;
       margin: 0;
+      font-size: 1.25rem;
+      font-weight: 600;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
     }
-    
+
     .config-close {
       background: none;
       border: none;
-      color: white;
-      font-size: 24px;
+      color: #6b7280;
+      font-size: 20px;
       cursor: pointer;
-      padding: 5px;
-      border-radius: 50%;
+      padding: 8px;
+      border-radius: 8px;
       transition: all 0.2s ease;
     }
-    
+
     .config-close:hover {
-      background: rgba(255,255,255,0.1);
-      transform: rotate(90deg);
+      background: #f3f4f6;
+      color: #1f2a44;
     }
-    
+
     .config-section {
-      padding: 20px 30px;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
+      padding: 16px 24px;
+      border-bottom: 1px solid #3a3d4a;
     }
-    
+
     .config-section:last-of-type {
       border-bottom: none;
     }
-    
+
     .config-section h3 {
-      color: white;
-      margin: 0 0 15px 0;
+      color: #ffffff;
+      margin: 0 0 12px 0;
+      font-size: 1rem;
+      font-weight: 600;
       display: flex;
       align-items: center;
-      gap: 10px;
-      font-size: 1.1rem;
+      gap: 8px;
     }
-    
+
     .config-input-group {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 6px;
     }
-    
+
     .config-input-group label {
-      color: rgba(255,255,255,0.9);
-      font-size: 0.9rem;
+      color: #4b5563;
+      font-size: 0.875rem;
       font-weight: 500;
     }
-    
+
     .config-input {
-      padding: 12px 15px;
-      border: 2px solid rgba(255,255,255,0.1);
+      padding: 10px 12px;
+      border: 1px solid #3a3d4a;
       border-radius: 8px;
-      background: rgba(255,255,255,0.1);
-      color: white;
-      font-size: 14px;
-      transition: all 0.3s ease;
+      background: #2a2d3a;
+      color: #ffffff;
+      font-size: 0.875rem;
+      transition: all 0.2s ease;
     }
-    
+
     .config-input:focus {
       outline: none;
-      border-color: #4ade80;
-      background: rgba(255,255,255,0.15);
-      box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.1);
+      border-color: #c084fc;
+      box-shadow: 0 0 0 3px rgba(192, 132, 252, 0.1);
     }
-    
+
     .config-input::placeholder {
-      color: rgba(255,255,255,0.5);
+      color: #9ca3af;
     }
-    
+
     .config-status {
-      font-size: 0.85rem;
-      padding: 8px 12px;
+      font-size: 0.75rem;
+      padding: 6px 10px;
       border-radius: 6px;
       display: flex;
       align-items: center;
       gap: 6px;
-      margin-top: 5px;
+      margin-top: 4px;
     }
-    
+
     .config-status.checking {
-      background: rgba(255, 193, 7, 0.2);
-      color: #ffc107;
+      background: #fef3c7;
+      color: #d97706;
     }
-    
+
     .config-status.connected {
-      background: rgba(76, 175, 80, 0.2);
-      color: #4CAF50;
+      background: #dcfce7;
+      color: #15803d;
     }
-    
+
     .config-status.disconnected {
-      background: rgba(244, 67, 54, 0.2);
-      color: #f44336;
+      background: #fee2e2;
+      color: #b91c1c;
     }
-    
+
     .config-actions {
-      padding: 20px 30px;
+      padding: 16px 24px;
       display: flex;
-      gap: 12px;
+      gap: 10px;
       justify-content: flex-end;
     }
-    
+
     .btn {
-      padding: 10px 20px;
+      padding: 8px 16px;
       border: none;
       border-radius: 8px;
       cursor: pointer;
       font-weight: 500;
+      font-size: 0.875rem;
       transition: all 0.2s ease;
       display: flex;
       align-items: center;
-      gap: 8px;
-      background: #4ade80;
-      color: white;
-    }
-    
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    }
-    
-    .btn-secondary {
-      background: rgba(255,255,255,0.1);
-      color: white;
-    }
-    
-    .btn-accent {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      gap: 6px;
+      background: #c084fc;
       color: white;
     }
 
-    /* Enhanced main UI styling */
-    .header h1 {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      font-size: 2.5rem;
-      margin-bottom: 10px;
+    .btn:hover {
+      background: #a855f7;
+      transform: translateY(-1px);
     }
-    
+
+    .btn-secondary {
+      background: #3a3d4a;
+      color: #ffffff;
+    }
+
+    .btn-secondary:hover {
+      background: #4a4d5a;
+    }
+
+    .btn-accent {
+      background: #10b981;
+      color: white;
+    }
+
+    .btn-accent:hover {
+      background: #059669;
+    }
+
+    /* Main UI */
+    .container {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .welcome-section {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .welcome-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #ffffff;
+      margin-bottom: 24px;
+    }
+
+    .persona-selection-title {
+      font-size: 1rem;
+      font-weight: 500;
+      color: #ffffff;
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    /* Persona Selection */
+    .persona-grid {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 32px;
+      overflow-x: auto;
+      padding: 10px 0;
+      justify-content: flex-start;
+    }
+
+    .persona-grid::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .persona-grid::-webkit-scrollbar-track {
+      background: #3a3d4a;
+      border-radius: 3px;
+    }
+
+    .persona-grid::-webkit-scrollbar-thumb {
+      background: #c084fc;
+      border-radius: 3px;
+    }
+
+    .persona-option {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      min-width: 100px;
+      flex-shrink: 0;
+    }
+
+    .persona-emoji-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      border: 3px solid transparent;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      background: #4a4d5a;
+    }
+
+    .persona-option.selected .persona-emoji-avatar {
+      border-color: #c084fc;
+      background: #3a3d4a;
+    }
+
+    .persona-option:hover .persona-emoji-avatar {
+      transform: scale(1.05);
+    }
+
+    .persona-name {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #ffffff;
+      margin-top: 8px;
+    }
+
+    .persona-description {
+      font-size: 0.75rem;
+      color: #9ca3af;
+      margin-top: 2px;
+    }
+
     .status-indicator {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 4px 8px;
-      border-radius: 12px;
-      font-size: 0.8rem;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
       font-weight: 500;
     }
-    
+
     .status-ready {
-      background: rgba(74, 222, 128, 0.2);
-      color: #4ade80;
-    }
-    
-    .status-unavailable {
-      background: rgba(239, 68, 68, 0.2);
-      color: #ef4444;
+      background: #dcfce7;
+      color: #15803d;
     }
 
-    /* Add some nice animations */
+    .status-unavailable {
+      background: #fee2e2;
+      color: #b91c1c;
+    }
+
     @keyframes pulse {
       0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.05); }
+      50% { transform: scale(1.03); }
     }
-    
+
     .record-btn.recording {
-      animation: pulse 1s infinite;
+      animation: pulse 1.2s infinite;
     }
-    
-    /* API Warning Styles */
+
     .api-warning {
       position: relative;
-      opacity: 0.7;
+      transition: opacity 0.2s ease;
     }
-    
+
     .api-warning::before {
       content: "\f023";
       font-family: "Font Awesome 6 Free";
       font-weight: 900;
       position: absolute;
-      top: -8px;
-      right: -8px;
-      background: #ef4444;
+      top: -6px;
+      right: -6px;
+      background: #b91c1c;
       color: white;
       border-radius: 50%;
-      width: 20px;
-      height: 20px;
+      width: 16px;
+      height: 16px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 10px;
-      z-index: 10;
+      font-size: 8px;
     }
-    
-    .api-warning:hover {
-      opacity: 1;
-    }
-    
-    /* Status text styling */
+
     .status-text.warning {
-      color: #f59e0b;
-      background: rgba(245, 158, 11, 0.1);
+      color: #d97706;
+      background: #fef3c7;
       padding: 8px 12px;
       border-radius: 6px;
-      margin-top: 10px;
-      border: 1px solid rgba(245, 158, 11, 0.3);
+      margin-top: 8px;
+      border: 1px solid #fed7aa;
     }
-    
+
     .status-text.success {
-      color: #4ade80;
-      background: rgba(74, 222, 128, 0.1);
+      color: #15803d;
+      background: #dcfce7;
       padding: 8px 12px;
       border-radius: 6px;
-      margin-top: 10px;
-      border: 1px solid rgba(74, 222, 128, 0.3);
+      margin-top: 8px;
+      border: 1px solid #bbf7d0;
+    }
+
+    /* Collapsible Sections */
+    .collapsible-section {
+      background: #3a3d4a;
+      border-radius: 12px;
+      margin-bottom: 16px;
+      overflow: hidden;
+    }
+
+    .collapsible-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 20px;
+      cursor: pointer;
+      background: #3a3d4a;
+      border: none;
+      color: #ffffff;
+      font-weight: 500;
+      width: 100%;
+      text-align: left;
+    }
+
+    .collapsible-header:hover {
+      background: #4a4d5a;
+    }
+
+    .collapsible-content {
+      padding: 0 20px 16px 20px;
+      background: #3a3d4a;
+    }
+
+    .collapsible-content.hidden {
+      display: none;
+    }
+
+    /* Start Talking Button */
+    .start-talking-btn {
+      background: linear-gradient(135deg, #c084fc, #a855f7);
+      color: white;
+      border: none;
+      padding: 16px 32px;
+      border-radius: 25px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 32px auto;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 15px rgba(192, 132, 252, 0.3);
+    }
+
+    .start-talking-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(192, 132, 252, 0.4);
+    }
+
+    .start-talking-btn.recording {
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+      animation: pulse 1.2s infinite;
+    }
+
+    /* Chat Section */
+    .chat-tabs {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 16px;
+      border-bottom: 1px solid #3a3d4a;
+    }
+
+    .chat-tab {
+      background: none;
+      border: none;
+      color: #9ca3af;
+      padding: 8px 0;
+      cursor: pointer;
+      font-size: 0.875rem;
+      font-weight: 500;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s ease;
+    }
+
+    .chat-tab.active {
+      color: #c084fc;
+      border-bottom-color: #c084fc;
+    }
+
+    .chat-input-container {
+      display: flex;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .chat-input {
+      flex: 1;
+      padding: 12px 16px;
+      border: 1px solid #3a3d4a;
+      border-radius: 25px;
+      background: #2a2d3a;
+      color: #ffffff;
+      font-size: 0.875rem;
+    }
+
+    .chat-input::placeholder {
+      color: #6b7280;
+    }
+
+    .chat-input:focus {
+      outline: none;
+      border-color: #c084fc;
+    }
+
+    .send-btn {
+      background: #c084fc;
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .send-btn:hover {
+      background: #a855f7;
+      transform: scale(1.05);
+    }
+
+    .current-persona {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      background: #f3f4f6;
+      border-radius: 20px;
+      font-size: 0.875rem;
+    }
+
+    .weather-tip,
+    .productivity-tip {
+      font-size: 0.75rem;
+      color: #6b7280;
+      font-style: italic;
+      margin-top: 8px;
+    }
+
+    .agent-controls {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    .record-btn {
+      background: #4f46e5;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    .record-btn:hover {
+      background: #4338ca;
+    }
+
+    .chat-bubble {
+      background: #3a3d4a;
+      border-radius: 12px;
+      padding: 16px;
+      border: 1px solid #4a4d5a;
+      margin-top: 16px;
+    }
+
+    .user-msg,
+    .ai-msg {
+      margin-bottom: 8px;
+      font-size: 0.875rem;
+      color: #ffffff;
+    }
+
+    .chat-bubble:empty {
+      display: none;
+    }
+
+    .chat-bubble:not(:empty) {
+      display: block;
+    }
+
+    .history-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      font-size: 0.875rem;
+      font-weight: 600;
+    }
+
+    /* Enhancements Section */
+    .enhancements-section {
+      background: white;
+      border-radius: 12px;
+      padding: 16px;
+      border: 1px solid #e5e7eb;
+      margin-top: 24px;
+    }
+
+    .enhancements-section h3 {
+      color: #4f46e5;
+      font-size: 1.125rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .enhancements-section .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+    }
+
+    .enhancements-section .card {
+      background: #f9fafb;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #e5e7eb;
+    }
+
+    .enhancements-section .card h4 {
+      color: #10b981;
+      font-size: 0.875rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .enhancements-section .card p {
+      font-size: 0.75rem;
+      color: #6b7280;
+      margin: 0;
     }
   </style>
 </head>
 <body>
-  <!-- API Configuration Button -->
-  <button class="config-button" onclick="openConfigModal()" title="Configure API Keys">
-    <i class="fas fa-cog"></i>
-  </button>
+  <!-- Header -->
+  <div class="app-header">
+    <div class="app-title">
+      <i class="fas fa-microphone-alt"></i>
+      VoiceSync AI
+    </div>
+    <div class="header-actions">
+      <button class="config-button" onclick="openConfigModal()" title="Configure API Keys">
+        <i class="fas fa-cog"></i>
+      </button>
+      <div class="profile-avatar">👤</div>
+    </div>
+  </div>
 
   <!-- API Configuration Modal -->
   <div id="configModal" class="config-modal">
@@ -380,154 +776,114 @@
   </div>
 
   <div class="container">
-    <div class="header">
-      <h1>🎤 AI Voice Agent</h1>
-      <p>Day 27: Enhanced with User API Key Management</p>
-      <div style="display: flex; gap: 12px; justify-content: center; margin-top: 15px;">
-        <span id="apiStatusIndicator" class="status-indicator status-unavailable">
+    <div class="welcome-section">
+      <h1 class="welcome-title">Welcome back, Sarah</h1>
+    </div>
+
+    <div class="persona-selection-title">Choose Your AI Character</div>
+    <div class="persona-grid" id="personaGrid">
+      <!-- Personas will be loaded dynamically here -->
+    </div>
+
+    <!-- API Configuration Section -->
+    <div class="collapsible-section">
+      <button class="collapsible-header" onclick="toggleCollapsible('apiConfig')">
+        API Configuration
+        <i class="fas fa-chevron-down"></i>
+      </button>
+      <div id="apiConfig" class="collapsible-content hidden">
+        <div id="apiStatusIndicator" class="status-indicator status-unavailable">
           <i class="fas fa-key"></i> Configure API Keys
-        </span>
+        </div>
       </div>
     </div>
 
-    <div class="feature-section">
-      <div class="persona-section" style="margin-bottom: 1.5rem;">
-        <div class="persona-title" style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.8rem;">
-          <i class="fas fa-theater-masks"></i>
-          <h3 style="margin: 0; font-size: 1.1rem;">Choose Your AI Character:</h3>
-        </div>
-        <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
-          <select id="personaSelect" class="persona-select" aria-label="Select AI persona" onchange="changePersona()">
-            <option value="">Loading personas...</option>
-          </select>
-          <div id="currentPersona" class="current-persona" style="display: flex; align-items: center; gap: 0.5rem; padding: 0.4rem 0.8rem; background: rgba(255,255,255,0.1); border-radius: 20px; font-size: 0.9rem;">
-            <span id="personaEmoji">🤖</span>
-            <span id="personaName">Default Assistant</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Service Status Sections -->
-      <div class="weather-section" style="margin-bottom: 1rem; padding: 0.8rem 1rem; background: rgba(255,255,255,0.05); border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
-        <div class="weather-title" style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
-          <i class="fas fa-cloud-sun"></i>
-          <h4 style="margin: 0; font-size: 1rem; opacity: 0.9;">Weather Skill:</h4>
-        </div>
-        <div id="weatherStatus" class="weather-status" style="font-size: 0.9rem; opacity: 0.8;">
+    <!-- Service Status Section -->
+    <div class="collapsible-section">
+      <button class="collapsible-header" onclick="toggleCollapsible('serviceStatus')">
+        Service Status
+        <i class="fas fa-chevron-down"></i>
+      </button>
+      <div id="serviceStatus" class="collapsible-content hidden">
+        <div id="weatherStatus" class="weather-status">
           <i class="fas fa-spinner fa-spin"></i> Checking weather service...
         </div>
-        <div class="weather-tip" style="font-size: 0.85rem; margin-top: 0.3rem; opacity: 0.7; font-style: italic;">
-          💡 Try asking: "What's the weather in New York?" or "Will it rain tomorrow?"
-        </div>
-      </div>
-
-      <div class="productivity-section" style="margin-bottom: 1.5rem; padding: 0.8rem 1rem; background: rgba(255,255,255,0.05); border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
-        <div class="productivity-title" style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
-          <i class="fas fa-clock"></i>
-          <h4 style="margin: 0; font-size: 1rem; opacity: 0.9;">Time & Productivity:</h4>
-        </div>
-        <div id="productivityStatus" class="productivity-status" style="font-size: 0.9rem; opacity: 0.8;">
+        <div id="productivityStatus" class="productivity-status">
           <i class="fas fa-spinner fa-spin"></i> Checking productivity service...
         </div>
-        <div id="currentTime" class="current-time" style="font-size: 0.9rem; margin-top: 0.5rem; opacity: 0.8; color: #4ade80;">
+        <div id="currentTime" class="current-time">
           <i class="fas fa-clock"></i> <span id="timeDisplay">Loading time...</span>
         </div>
-        <div class="productivity-tip" style="font-size: 0.85rem; margin-top: 0.3rem; opacity: 0.7; font-style: italic;">
-          💡 Try saying: "What time is it?", "Add task", "Start pomodoro timer", or "Show my tasks"
-        </div>
       </div>
-
-      <div class="agent-controls">
-        <button id="recordToggle" class="record-btn" type="button" onclick="toggleRecording()" aria-pressed="false" aria-label="Record or stop">
-          <span class="record-icon"><i class="fas fa-microphone"></i></span>
-          <span id="recordLabel">Start Talking</span>
-          <span class="vu" aria-hidden="true">
-            <span class="bar b1"></span>
-            <span class="bar b2"></span>
-            <span class="bar b3"></span>
-          </span>
-        </button>
-        <button id="autoToggle" class="btn btn-accent" onclick="toggleAutoStream()">
-          <i class="fas fa-bolt"></i> Enable Auto-Stream
-        </button>
-      </div>
-
-      <!-- Text Chat Interface -->
-      <div class="text-chat-section" style="margin-top: 1.5rem; padding: 1rem; background: rgba(255,255,255,0.05); border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
-        <h4 style="color: #4ade80; margin: 0 0 12px 0; display: flex; align-items: center; gap: 8px;">
-          <i class="fas fa-keyboard"></i> Text Chat (Try this while voice setup is in progress)
-        </h4>
-        <div style="display: flex; gap: 8px; align-items: flex-end;">
-          <div style="flex: 1;">
-            <input type="text" id="textInput" placeholder="Type your message here... (e.g., 'How are you?')" 
-                   style="width: 100%; padding: 12px 15px; border: 2px solid rgba(255,255,255,0.1); border-radius: 8px; background: rgba(255,255,255,0.1); color: white; font-size: 14px;"
-                   onkeypress="if(event.key==='Enter') sendTextMessage()">
-          </div>
-          <button class="btn" onclick="sendTextMessage()" style="padding: 12px 20px;">
-            <i class="fas fa-paper-plane"></i> Send
-          </button>
-        </div>
-      </div>
-
-      <div id="uploadStatus" class="status-text"></div>
-      <div id="typingIndicator" class="typing" style="display:none" aria-live="polite" aria-label="AI is speaking">
-        <span></span><span></span><span></span>
-      </div>
-
-      <!-- Hidden audio element for AI replies -->
-      <audio id="replyAudio" preload="auto" style="display:none;"></audio>
     </div>
 
-    <div id="chatBubble" class="chat-bubble" style="display:none; margin-top: 1em;">
+    <!-- Start Talking Button -->
+    <button id="recordToggle" class="start-talking-btn" type="button" onclick="toggleRecording()" aria-pressed="false" aria-label="Record or stop">
+      <i class="fas fa-microphone"></i>
+      <span id="recordLabel">Start Talking</span>
+    </button>
+
+    <!-- Auto Stream Button (hidden for now to match design) -->
+    <button id="autoToggle" class="btn btn-accent" onclick="toggleAutoStream()" style="display: none;">
+      <i class="fas fa-bolt"></i> Enable Auto-Stream
+    </button>
+
+    <!-- Hidden persona select for compatibility -->
+    <select id="personaSelect" style="display: none;" onchange="changePersona()">
+      <option value="">Loading personas...</option>
+    </select>
+    
+    <!-- Hidden current persona display for compatibility -->
+    <div id="currentPersona" style="display: none;">
+      <span id="personaEmoji">🤖</span>
+      <span id="personaName">Default Assistant</span>
+    </div>
+
+    <!-- Chat Section -->
+    <div class="chat-tabs">
+      <button class="chat-tab active" onclick="setActiveTab('text')">Text Chat</button>
+      <button class="chat-tab" onclick="setActiveTab('history')">Real-time Chat History</button>
+    </div>
+
+    <div class="chat-input-container">
+      <input type="text" id="textInput" class="chat-input" placeholder="Type your message..." 
+             onkeypress="if(event.key==='Enter') sendTextMessage()">
+      <button class="send-btn" onclick="sendTextMessage()">
+        <i class="fas fa-paper-plane"></i>
+      </button>
+    </div>
+
+    <div id="uploadStatus" class="status-text"></div>
+    <div id="typingIndicator" class="typing" style="display:none" aria-live="polite" aria-label="AI is speaking">
+      <span></span><span></span><span></span>
+    </div>
+
+    <audio id="replyAudio" preload="auto" style="display:none;"></audio>
+
+    <div id="chatBubble" class="chat-bubble">
       <div class="user-msg"><strong>🧑 You:</strong> <span id="bubbleUser"></span></div>
-      <div class="ai-msg"><strong>🤖 AI:</strong> <span id="bubbleAI"></span></div>
+      <div class="ai-msg"><strong><span id="currentPersonaEmoji">🤖</span> AI:</strong> <span id="bubbleAI"></span></div>
     </div>
 
-    <div id="chatHistoryCard" class="chat-history-card" style="margin-top: 1.5em;">
-      <div class="history-title" style="display:flex; align-items:center; justify-content:space-between; gap:8px;">
-        <span>⚡ Real-Time Chat History:</span>
+    <div id="chatHistoryCard" class="chat-history-card" style="display:none; background: #3a3d4a; border: 1px solid #4a4d5a; border-radius: 12px; padding: 16px; margin-top: 16px;">
+      <div class="history-title">
+        <span style="color: #ffffff;">⚡ Real-Time Chat History:</span>
         <div style="display:flex; gap:8px;">
-          <button class="btn btn-secondary" style="padding:0.45em 0.9em; font-size:0.9em;" onclick="clearHistory()">
+          <button class="btn btn-secondary" onclick="clearHistory()">
             <i class="fas fa-broom"></i> Clear
           </button>
-          <button class="btn btn-secondary" style="padding:0.45em 0.9em; font-size:0.9em;" onclick="scrollHistoryToTop()">
+          <button class="btn btn-secondary" onclick="scrollHistoryToTop()">
             <i class="fas fa-arrow-up"></i> Top
           </button>
-          <button class="btn btn-secondary" style="padding:0.45em 0.9em; font-size:0.9em;" onclick="scrollHistoryToBottom()">
+          <button class="btn btn-secondary" onclick="scrollHistoryToBottom()">
             <i class="fas fa-arrow-down"></i> Bottom
           </button>
         </div>
       </div>
-      <div id="historyList" class="chat-history-list"></div>
-    </div>
-
-    <!-- Day 27 Features Section -->
-    <div style="margin-top: 2rem; padding: 1.5rem; background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%); border-radius: 15px; border: 1px solid rgba(255,255,255,0.1);">
-      <h3 style="color: #667eea; display: flex; align-items: center; gap: 10px; margin: 0 0 15px 0;">
-        <i class="fas fa-star"></i> Day 27 Enhancements
-      </h3>
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
-        <div style="padding: 15px; background: rgba(255,255,255,0.05); border-radius: 10px;">
-          <h4 style="color: #4ade80; margin: 0 0 8px 0; display: flex; align-items: center; gap: 8px;">
-            <i class="fas fa-key"></i> User API Keys
-          </h4>
-          <p style="margin: 0; opacity: 0.9; font-size: 0.9rem;">Configure your own API keys instead of using .env file keys. Secure and personalized.</p>
-        </div>
-        <div style="padding: 15px; background: rgba(255,255,255,0.05); border-radius: 10px;">
-          <h4 style="color: #4ade80; margin: 0 0 8px 0; display: flex; align-items: center; gap: 8px;">
-            <i class="fas fa-shield-alt"></i> Secure Storage
-          </h4>
-          <p style="margin: 0; opacity: 0.9; font-size: 0.9rem;">API keys are securely managed and validated before use in the voice agent.</p>
-        </div>
-        <div style="padding: 15px; background: rgba(255,255,255,0.05); border-radius: 10px;">
-          <h4 style="color: #4ade80; margin: 0 0 8px 0; display: flex; align-items: center; gap: 8px;">
-            <i class="fas fa-magic"></i> Enhanced UI
-          </h4>
-          <p style="margin: 0; opacity: 0.9; font-size: 0.9rem;">Modern design with improved animations, better feedback, and polished user experience.</p>
-        </div>
-      </div>
+      <div id="historyList" class="chat-history-list" style="color: #ffffff; max-height: 300px; overflow-y: auto;"></div>
     </div>
   </div>
+
 
   <script>
     // API Configuration and Voice Agent JavaScript
@@ -553,6 +909,10 @@
     
     // Flag to track if API keys are configured
     let apiKeysConfigured = false;
+
+    // UI State Management
+    let activeTab = 'text';
+    let selectedPersona = 'ethan';
 
     // Session management
     function getOrCreateSessionId() {
@@ -1154,21 +1514,43 @@
         const data = await response.json();
         
         const select = document.getElementById('personaSelect');
+        const grid = document.getElementById('personaGrid');
+        
         if (data.personas && Array.isArray(data.personas)) {
           // Clear loading option
           select.innerHTML = '';
+          grid.innerHTML = '';
           
-          // Add personas to dropdown
-          data.personas.forEach(persona => {
+          // Add personas to dropdown (for compatibility)
+          data.personas.forEach((persona, index) => {
             const option = document.createElement('option');
             option.value = persona.id;
             option.textContent = `${persona.emoji} ${persona.name}`;
             select.appendChild(option);
+            
+            // Add persona to grid
+            const personaDiv = document.createElement('div');
+            personaDiv.className = `persona-option ${index === 0 ? 'selected' : ''}`;
+            personaDiv.setAttribute('data-persona-id', persona.id);
+            personaDiv.addEventListener('click', () => selectPersona(persona.id));
+            
+            personaDiv.innerHTML = `
+              <div class="persona-emoji-avatar">${persona.emoji}</div>
+              <div class="persona-name">${persona.name}</div>
+              <div class="persona-description">${persona.description || 'AI Assistant'}</div>
+            `;
+            
+            grid.appendChild(personaDiv);
           });
           
           // Set default persona
-          select.value = 'default';
-          updateCurrentPersonaDisplay('default', data.personas.find(p => p.id === 'default'));
+          const defaultPersona = data.personas[0];
+          select.value = defaultPersona.id;
+          selectedPersona = defaultPersona.id;
+          updateCurrentPersonaDisplay(defaultPersona.id, defaultPersona);
+          
+          // Update chat bubble emoji for initial persona
+          updateChatPersonaEmoji(defaultPersona.id);
           
           console.log(`Loaded ${data.personas.length} personas successfully`);
         } else {
@@ -1177,9 +1559,13 @@
       } catch (error) {
         console.error('Failed to load personas:', error);
         const select = document.getElementById('personaSelect');
+        const grid = document.getElementById('personaGrid');
         select.innerHTML = '<option value="">Failed to load personas</option>';
+        grid.innerHTML = '<div style="color: #9ca3af; text-align: center; padding: 20px;">Failed to load personas</div>';
       }
     }
+    
+
     
     function updateCurrentPersonaDisplay(personaId, persona) {
       if (!persona) return;
@@ -1222,6 +1608,80 @@
         }
       } catch (error) {
         console.error('Error changing persona:', error);
+      }
+    }
+
+    // New UI Functions
+    function selectPersona(personaId) {
+      // Update visual selection
+      document.querySelectorAll('.persona-option').forEach(option => {
+        option.classList.remove('selected');
+      });
+      
+      // Find and select the clicked persona
+      const clickedPersona = document.querySelector(`[data-persona-id="${personaId}"]`);
+      if (clickedPersona) {
+        clickedPersona.classList.add('selected');
+      }
+      
+      selectedPersona = personaId;
+      
+      // Update the hidden persona select for compatibility
+      const select = document.getElementById('personaSelect');
+      if (select) {
+        select.value = personaId;
+        changePersona();
+      }
+      
+      // Update chat bubble emoji immediately
+      updateChatPersonaEmoji(personaId);
+    }
+
+    function updateChatPersonaEmoji(personaId) {
+      // Get the persona data to find the emoji
+      const personaOption = document.querySelector(`[data-persona-id="${personaId}"]`);
+      if (personaOption) {
+        const emojiElement = personaOption.querySelector('.persona-emoji-avatar');
+        if (emojiElement) {
+          const emoji = emojiElement.textContent;
+          // Update chat bubble emoji
+          const chatEmojiElement = document.getElementById('currentPersonaEmoji');
+          if (chatEmojiElement) {
+            chatEmojiElement.textContent = emoji;
+          }
+        }
+      }
+    }
+
+    function toggleCollapsible(sectionId) {
+      const content = document.getElementById(sectionId);
+      const icon = event.target.querySelector('i');
+      
+      content.classList.toggle('hidden');
+      
+      if (content.classList.contains('hidden')) {
+        icon.className = 'fas fa-chevron-down';
+      } else {
+        icon.className = 'fas fa-chevron-up';
+      }
+    }
+
+    function setActiveTab(tabName) {
+      // Update tab buttons
+      document.querySelectorAll('.chat-tab').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      event.target.classList.add('active');
+      
+      activeTab = tabName;
+      
+      // Show/hide appropriate content
+      const historyCard = document.getElementById('chatHistoryCard');
+      if (tabName === 'history') {
+        historyCard.style.display = 'block';
+        refreshChatHistory();
+      } else {
+        historyCard.style.display = 'none';
       }
     }
 
@@ -1297,7 +1757,9 @@
             const msgDiv = document.createElement('div');
             msgDiv.className = `history-message ${msg.role}`;
             
-            const roleIcon = msg.role === 'user' ? '🧑' : '🤖';
+            const currentPersonaEmojiEl = document.getElementById('currentPersonaEmoji');
+            const currentPersonaEmoji = currentPersonaEmojiEl ? currentPersonaEmojiEl.textContent : '🤖';
+            const roleIcon = msg.role === 'user' ? '🧑' : currentPersonaEmoji;
             const timestamp = new Date(msg.ts).toLocaleTimeString();
             
             msgDiv.innerHTML = `

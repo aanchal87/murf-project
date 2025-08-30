@@ -47,12 +47,28 @@ def detect_weather_query(text: str) -> Dict[str, any]:
     
     # Check for weather keywords
     weather_score = 0
-    for keyword in WEATHER_KEYWORDS:
-        if keyword in text_lower:
-            weather_score += 1
+    has_actual_weather_terms = False
     
-    # If no weather keywords found, not a weather query
-    if weather_score == 0:
+    # Core weather terms that must be present
+    core_weather_terms = ['weather', 'temperature', 'temp', 'hot', 'cold', 'sunny', 'rainy', 
+                         'cloudy', 'humid', 'dry', 'windy', 'stormy', 'snow', 'snowing', 
+                         'rain', 'raining', 'clear', 'overcast', 'foggy', 'misty', 'forecast']
+    
+    # Check for actual weather terms first
+    for term in core_weather_terms:
+        if term in text_lower:
+            has_actual_weather_terms = True
+            weather_score += 2  # Give more weight to actual weather terms
+    
+    # Only check question words if we have actual weather terms
+    if has_actual_weather_terms:
+        question_words = ["what's", "how's", "is it", "will it", "should i", "do i need"]
+        for keyword in question_words:
+            if keyword in text_lower:
+                weather_score += 1
+    
+    # If no actual weather terms found, not a weather query
+    if not has_actual_weather_terms:
         return {
             'is_weather_query': False,
             'query_type': 'none',
